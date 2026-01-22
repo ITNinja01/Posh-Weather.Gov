@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-WeatherForecastFullByIP
 .NOTES
 Developer: ITNinja01  
-Date: 01-10-2025
+Date: 01-22-2025
 Version: 1.0.0
 #>
 
@@ -48,6 +48,6 @@ Write-Host "The next week:"
 (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object name, temperature, shortForecast, windSpeed | Out-Default
 
 Write-Host "The next 24 hours:"
-$HourlyWeather = (Invoke-RestMethod ($FullWeather.properties.forecastHourly)).Properties.periods | Select-Object startTime, endTime, temperature, probabilityOfPrecipitation
+$HourlyWeather = (Invoke-RestMethod ($FullWeather.properties.forecastHourly)).Properties.periods | Select-Object startTime, endTime, temperature, probabilityOfPrecipitation, dewpoint, windSpeed, windDirection, relativeHumidity 
 $HourlyWeather[0..23]
-}86
+}
