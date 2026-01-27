@@ -1,4 +1,4 @@
-function Get-WeatherForecastShortByIP {
+function Get-WeatherForecastShortByZip {
 <#
 .SYNOPSIS
 This script will show the weather forecast for now, next week of time and next 8 hours based off your public IP.
@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-WeatherForecastShortIP
 .NOTES
 Developer: ITNinja01
-Date: 01-17-2026
+Date: 01-17-2025
 Version: 1.0.0
 #>
 
