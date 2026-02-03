@@ -16,92 +16,100 @@ Weather.Gov JSON response
 Get-WeatherForecastFullByIP
 .NOTES
 Developer: ITNinja01  
-Date: 01-24-2026
+Date: 02-02-2026
 Version: 1.0.0
 #>
 
     #Set TLS 1.2 for the API calls
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
     $ZipCode = Read-Host -Prompt "Please enter your ZIP Code, if you are in the United States?"
 
-    $response = Invoke-RestMethod  -Uri "api.zippopotam.us/us/$ZipCode"
+    $CountryFullName = Read-Host -Prompt "Please enter your country (e.g., US, CA, GB), or press Enter to auto-detect"
 
     $CountryHashTable = @{
-        'Andorra'                      = { $Country = 'AD' }
-        'Argentina'                    = { $Country = 'AR' }
-        'American Samoa'               = { $Country = 'AS' }
-        'Austria'                      = { $Country = 'AT' }
-        'Australia'                    = { $Country = 'AU' }
-        'Bangladesh'                   = { $Country = 'BD' }
-        'Belgium'                      = { $Country = 'BE' }
-        'Bulgaria'                     = { $Country = 'BG' }
-        'Brazil'                       = { $Country = 'BR' }
-        'Canada'                       = { $Country = 'CA' }
-        'Switzerland'                  = { $Country = 'CH' }
-        'Czech Republic'               = { $Country = 'CZ' }
-        'Germany'                      = { $Country = 'DE' }
-        'Denmark'                      = { $Country = 'DK' }
-        'Dominican Republic'           = { $Country = 'DO' }
-        'Spain'                        = { $Country = 'ES' }
-        'Finland'                      = { $Country = 'FI' }
-        'Faroe Islands'                = { $Country = 'FO' }
-        'France'                       = { $Country = 'FR' }
-        'Great Britain'                = { $Country = 'GB' }
-        'French Guyana'                = { $Country = 'GF' }
-        'Guernsey'                     = { $Country = 'GG' }
-        'Greenland'                    = { $Country = 'GL' }
-        'Guadeloupe'                   = { $Country = 'gp' }
-        'Guatemala'                    = { $Country = 'GT' }
-        'Guam'                         = { $Country = 'GU' }
-        'Guyana'                       = { $Country = 'GY' }
-        'Croatia'                      = { $Country = 'HR' }
-        'Hungary'                      = { $Country = 'HU' }
-        'Isle of Man'                  = { $Country = 'IM' }
-        'India'                        = { $Country = 'IN' }
-        'Iceland'                      = { $Country = 'IS' }
-        'Italy'                        = { $Country = 'IT' }
-        'Jersey'                       = { $Country = 'JE' }
-        'Japan'                        = { $Country = 'JP' }
-        'Liechtenstein'                = { $Country = 'LI' }
-        'Sri Lanka'                    = { $Country = 'LK' }
-        'Lithuania'                    = { $Country = 'LT' }
-        'Luxembourg'                   = { $Country = 'LU' }
-        'Monaco'                       = { $Country = 'MC' }
-        'Moldavia'                     = { $Country = 'MD' }
-        'Marshall Islands'             = { $Country = 'MH' }
-        'Macedonia'                    = { $Country = 'MK' }
-        'Northern Mariana Islands'     = { $Country = 'MP' }
-        'Martinique'                   = { $Country = 'MQ' }
-        'Mexico'                       = { $Country = 'MX' }
-        'Malaysia'                     = { $Country = 'MY' }
-        'Holland'                      = { $Country = 'NL' }
-        'Norway'                       = { $Country = 'NO' }
-        'New Zealand'                  = { $Country = 'NZ' }
-        'Phillippines'                 = { $Country = 'PH' }
-        'Pakistan'                     = { $Country = 'PK' }
-        'Poland'                       = { $Country = 'PL' } 
-        'Saint Pierre and Miquelon'    = { $Country = 'PM' }
-        'Puerto Rico'                  = { $Country = 'PR' }
-        'Portugal'                     = { $Country = 'PT' }
-        'French Reunion'               = { $Country = 'RE' }
-        'Russia'                       = { $Country = 'RU' }
-        'Sweden'                       = { $Country = 'SE' }
-        'Slovenia'                     = { $Country = 'SI' }
-        'Svalbard & Jan Mayen Islands' = { $Country = 'SJ' }
-        'Slovak Republic'              = { $Country = 'SK' }
-        'San Marino'                   = { $Country = 'SM' }
-        'Thailand'                     = { $Country = 'TH' }
-        'Turkey'                       = { $Country = 'TR' }
-        'Vatican'                      = { $Country = 'VA' }
-        'Virgin Islands'               = { $Country = 'VI' }
-        'Mayotte'                      = { $Country = 'YT' }
-        'South Africa'                 = { $Country = 'ZA' }
-        'United States'                = { $Country = 'US' }
-        'USA'                          = { $Country = 'US' }
-        'US'                           = { $Country = 'US' }
+        'Andorra'                      = 'AD'
+        'Argentina'                    = 'AR'
+        'American Samoa'               = 'AS'
+        'Austria'                      = 'AT'
+        'Australia'                    = 'AU'
+        'Bangladesh'                   = 'BD'
+        'Belgium'                      = 'BE'
+        'Bulgaria'                     = 'BG'
+        'Brazil'                       = 'BR'
+        'Canada'                       = 'CA'
+        'Switzerland'                  = 'CH'
+        'Czech Republic'               = 'CZ'
+        'Germany'                      = 'DE'
+        'Denmark'                      = 'DK'
+        'Dominican Republic'           = 'DO'
+        'Spain'                        = 'ES'
+        'Finland'                      = 'FI'
+        'Faroe Islands'                = 'FO'
+        'France'                       = 'FR'
+        'Great Britain'                = 'GB'
+        'French Guyana'                = 'GF'
+        'Guernsey'                     = 'GG'
+        'Greenland'                    = 'GL'
+        'Guadeloupe'                   = 'GP'
+        'Guatemala'                    = 'GT'
+        'Guam'                         = 'GU'
+        'Guyana'                       = 'GY'
+        'Croatia'                      = 'HR'
+        'Hungary'                      = 'HU'
+        'Isle of Man'                  = 'IM'
+        'India'                        = 'IN'
+        'Iceland'                      = 'IS'
+        'Italy'                        = 'IT'
+        'Jersey'                       = 'JE'
+        'Japan'                        = 'JP'
+        'Liechtenstein'                = 'LI'
+        'Sri Lanka'                    = 'LK'
+        'Lithuania'                    = 'LT'
+        'Luxembourg'                   = 'LU'
+        'Monaco'                       = 'MC'
+        'Moldavia'                     = 'MD'
+        'Marshall Islands'             = 'MH'
+        'Macedonia'                    = 'MK'
+        'Northern Mariana Islands'     = 'MP'
+        'Martinique'                   = 'MQ'
+        'Mexico'                       = 'MX'
+        'Malaysia'                     = 'MY'
+        'Holland'                      = 'NL'
+        'Norway'                       = 'NO'
+        'New Zealand'                  = 'NZ'
+        'Phillippines'                 = 'PH'
+        'Pakistan'                     = 'PK'
+        'Poland'                       = 'PL' 
+        'Saint Pierre and Miquelon'    = 'PM'
+        'Puerto Rico'                  = 'PR'
+        'Portugal'                     = 'PT'
+        'French Reunion'               = 'RE'
+        'Russia'                       = 'RU'
+        'Sweden'                       = 'SE'
+        'Slovenia'                     = 'SI'
+        'Svalbard & Jan Mayen Islands' = 'SJ'
+        'Slovak Republic'              = 'SK'
+        'San Marino'                   = 'SM'
+        'Thailand'                     = 'TH'
+        'Turkey'                       = 'TR'
+        'Vatican'                      = 'VA'
+        'Virgin Islands'               = 'VI'
+        'Mayotte'                      = 'YT'
+        'South Africa'                 = 'ZA'
+        'United States'                = 'US'
+        'USA'                          = 'US'
+        'US'                           = 'US'
     }  
+    if ($CountryHashTable.ContainsKey($CountryFullName)) {
+        $Country = $CountryHashTable[$CountryFullName]
+    }
+    else {
+        Write-Host "Country not recognized or not provided. Defaulting to 'US'."
+        $Country = 'US'
+    }
 
+    $response = Invoke-RestMethod  -Uri "api.zippopotam.us/$Country/$ZipCode"
 
     #Extracts city, country, latitude and longitude from the response
     $latitude = $response.places.latitude
