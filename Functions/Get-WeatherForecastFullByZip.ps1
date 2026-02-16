@@ -23,7 +23,7 @@ Version: 1.0.0
     #Set TLS 1.2 for the API calls
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-    $ZipCode = Read-Host -Prompt "Please enter your ZIP Code, if you are in the United States?"
+    $ZipCode = Read-Host -Prompt "Please enter your ZIP Code?"
 
     $CountryFullName = Read-Host -Prompt "Please enter your country (e.g., US, CA, GB), or press Enter to auto-detect"
 
@@ -109,7 +109,18 @@ Version: 1.0.0
         $Country = 'US'
     }
 
-    $response = Invoke-RestMethod  -Uri "api.zippopotam.us/$Country/$ZipCode"
+    $URI = "https://api.zippopotam.us/$Country/$ZipCode"
+
+    try { Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
+            Write-Host "ZIP Code not found. Please check the ZIP Code and try again."
+      
+    }
+    catch {
+        Write-Host "ZIP Code found. Fetching weather data..."
+        
+    }
+
+    $response = Invoke-RestMethod -Uri $URI
 
     #Extracts city, country, latitude and longitude from the response
     $latitude = $response.places.latitude
@@ -124,7 +135,7 @@ Version: 1.0.0
     $FullWeather = Invoke-RestMethod $APIWeatherURL
 
     Write-Host "Latest:"
-    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object Name, detailedForecast, temperature, probabilityOfPrecipitation, windSpeed, windDirection |  Out-Default
+    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object Name, detailedForecast, temperature, probabilityOfPrecipitation, windSpeed, windDirection | Out-Default
 
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
