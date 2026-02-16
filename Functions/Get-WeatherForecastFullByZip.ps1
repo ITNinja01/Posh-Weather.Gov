@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-WeatherForecastFullByIP
 .NOTES
 Developer: ITNinja01  
-Date: 02-07-2026
+Date: 02-16-2026
 Version: 1.0.0
 #>
 
@@ -111,9 +111,9 @@ Version: 1.0.0
 
     $URI = "https://api.zippopotam.us/$Country/$ZipCode"
 
-    try { Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
-            Write-Host "ZIP Code not found. Please check the ZIP Code and try again."
-      
+    try {
+        Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
+        Write-Host "ZIP Code not found. Please check the ZIP Code and try again."  
     }
     catch {
         Write-Host "ZIP Code found. Fetching weather data..."
