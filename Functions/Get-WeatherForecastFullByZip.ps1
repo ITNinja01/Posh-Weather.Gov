@@ -114,6 +114,8 @@ Version: 1.0.0
     try {
         Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
         Write-Host "ZIP Code not found. Please check the ZIP Code and try again."  
+        $LASTEXITCODE = 1
+        Exit
     }
     catch {
         Write-Host "ZIP Code found. Fetching weather data..."
