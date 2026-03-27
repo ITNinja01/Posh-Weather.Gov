@@ -25,7 +25,7 @@ Version: 1.0.0
 
     $ZipCode = Read-Host -Prompt "Please enter your ZIP Code?"
 
-    $CountryFullName = Read-Host -Prompt "Please enter your country (e.g., US, CA, GB), or press Enter to auto-detect"
+    $CountryFullName = Read-Host -Prompt "Please enter your country (e.g., US, CA, GB). Default is US if left blank."
 
     $CountryHashTable = @{
         'Andorra'                      = 'AD'
@@ -111,11 +111,12 @@ Version: 1.0.0
 
     $URI = "https://api.zippopotam.us/$Country/$ZipCode"
 
+    # Try/Catth is not working. Look into the status code from Zippopotam.us.
     try {
         Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
         Write-Host "ZIP Code not found. Please check the ZIP Code and try again."  
         $LASTEXITCODE = 1
-        Exit
+        # Exit
     }
     catch {
         Write-Host "ZIP Code found. Fetching weather data..."
