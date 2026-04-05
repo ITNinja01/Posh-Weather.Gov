@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = 'Posh-Weather.Gov.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.0.0'
@@ -69,8 +69,7 @@ Copyright = '(c) ITNinja01. All rights reserved.'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @(
-'Get-WeatherForecastFullByIP', 
+FunctionsToExport = @('Get-WeatherForecastFullByIP', 
 'Get-WeatherForecastFullByZip', 
 'Get-WeatherForecastShortByIP', 
 'Get-WeatherForecastShortByZip')
@@ -93,10 +92,10 @@ AliasesToExport = @()
 # List of all files packaged with this module
  FileList = @('Posh-Weather.Gov.psm1', 
  'Posh-Weather.Gov.psd1',
- 'Get-WeatherForecastFullByIP.ps1', 
- 'Get-WeatherForecastFullByZip.ps1', 
- 'Get-WeatherForecastShortByIP.ps1', 
- 'Get-WeatherForecastShortByZip.ps1')
+ 'Functions\Get-WeatherForecastFullByIP.ps1', 
+ 'Functions\Get-WeatherForecastFullByZip.ps1', 
+ 'Functions\Get-WeatherForecastShortByIP.ps1', 
+ 'Functions\Get-WeatherForecastShortByZip.ps1')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{

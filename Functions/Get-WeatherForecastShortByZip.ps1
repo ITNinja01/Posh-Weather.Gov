@@ -9,17 +9,16 @@ API Calls, JSON, Terminal Output
 .COMPONENT
 Weather.Gov API, PowerShell
 .INPUTS
-Zippopotam.us JSON response
+Zippopotam.us JSON response, Weather.Gov API
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
 Get-WeatherForecastShortByZip
 .NOTES
 Developer: ITNinja01
-Date: 02-07-2026
+Date: 04-05-2026
 Version: 1.0.0
 #>
-
 
     #Set TLS 1.2 for the API calls
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -110,9 +109,22 @@ Version: 1.0.0
         $Country = 'US'
     }
 
-    $response = Invoke-RestMethod  -Uri "api.zippopotam.us/$Country/$ZipCode"
+    $URI = "https://api.zippopotam.us/$Country/$ZipCode"
+    
+    # Check if the ZIP Code is valid by checking the status code of the response. If it's 200, the ZIP Code is valid. If not, it will show an error message and exit the function.   
+    $WebResponse = Invoke-WebRequest -Uri $URI -Method Get -ErrorAction SilentlyContinue
+
+    if ($WebResponse.StatusCode -eq 200) {
+        Write-Host "ZIP Code found. Fetching weather data..."
+    }
+    else {
+        Write-Host "ZIP Code not found. Please check the ZIP Code and try again." -ForegroundColor Red
+        $LASTEXITCODE = 1
+        return
+    }
 
     #Extracts city, country, latitude and longitude from the response
+    $response = Invoke-RestMethod  -Uri $URI
     $latitude = $response.places.latitude
     $longitude = $response.places.longitude
     $City = $response.places.'place name'
@@ -120,13 +132,6 @@ Version: 1.0.0
     Write-Host "$City, $Country Forecast"
 
     #Creating variables to access weather
-
-    $APIWeatherURL = "https://api.weather.gov/points/$latitude,$longitude"
-    $FullWeather = Invoke-RestMethod $APIWeatherURL
-
-
-    #Creating variables to access weather
-
     $APIWeatherURL = "https://api.weather.gov/points/$latitude,$longitude"
     $FullWeather = Invoke-RestMethod $APIWeatherURL
 

@@ -9,14 +9,14 @@ API Calls, JSON, Terminal Output
 .COMPONENT
 Weather.Gov API, PowerShell
 .INPUTS
-Zippopotam.us
+Zippopotam.us JSON response, Weather.Gov API
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
 Get-WeatherForecastFullByIP
 .NOTES
 Developer: ITNinja01  
-Date: 02-16-2026
+Date: 04-05-2026
 Version: 1.0.0
 #>
 
@@ -111,21 +111,20 @@ Version: 1.0.0
 
     $URI = "https://api.zippopotam.us/$Country/$ZipCode"
 
-    # Try/Catth is not working. Look into the status code from Zippopotam.us.
-    try {
-        Invoke-WebRequest -Uri $URI -ErrorAction Stop | Out-Null
-        Write-Host "ZIP Code not found. Please check the ZIP Code and try again."  
-        $LASTEXITCODE = 1
-        # Exit
-    }
-    catch {
-        Write-Host "ZIP Code found. Fetching weather data..."
-        
-    }
+    # Check if the ZIP Code is valid by checking the status code of the response. If it's 200, the ZIP Code is valid. If not, it will show an error message and exit the function.   
+    $WebResponse = Invoke-WebRequest -Uri $URI -Method Get -ErrorAction SilentlyContinue
 
-    $response = Invoke-RestMethod -Uri $URI
+    if ($WebResponse.StatusCode -eq 200) {
+        Write-Host "ZIP Code found. Fetching weather data..."
+    }
+    else {
+        Write-Host "ZIP Code not found. Please check the ZIP Code and try again." -ForegroundColor Red
+        $LASTEXITCODE = 1
+        return
+    }
 
     #Extracts city, country, latitude and longitude from the response
+    $response = Invoke-RestMethod -Uri $URI
     $latitude = $response.places.latitude
     $longitude = $response.places.longitude
     $City = $response.places.'place name'
@@ -133,21 +132,19 @@ Version: 1.0.0
     Write-Host "$City, $Country Forecast"
 
     #Creating variables to access weather
-
     $APIWeatherURL = "https://api.weather.gov/points/$latitude,$longitude"
     $FullWeather = Invoke-RestMethod $APIWeatherURL
 
     Write-Host "Latest:"
-    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object Name, detailedForecast, temperature, probabilityOfPrecipitation, windSpeed, windDirection | Out-Default
+    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object -ExcludeProperty number, temperatureTrend, icon, shortForecast -First 3 | Out-Default
 
-    #Carriage return to make it easier to read in the terminal
-    $crlf = [Environment]::NewLine
-    $crlf
-
+    #Pause to allow the user to read the forecast before showing the next forecast.
+    Pause
     Write-Host "The next week:"
-    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object name, temperature, shortForecast, windSpeed | Out-Default
+    (Invoke-RestMethod ($FullWeather.properties.forecast)).Properties.periods | Select-Object name, temperature, shortForecast, windSpeed | Out-Default  
 
+    Pause
     Write-Host "The next 24 hours:"
-    $HourlyWeather = (Invoke-RestMethod ($FullWeather.properties.forecastHourly)).Properties.periods | Select-Object startTime, endTime, temperature, probabilityOfPrecipitation, dewpoint, windSpeed, windDirection, relativeHumidity 
-    $HourlyWeather[0..23]
+    $HourlyWeather = (Invoke-RestMethod ($FullWeather.properties.forecastHourly)).Properties.periods | Select-Object startTime, endTime, temperature, probabilityOfPrecipitation, dewpoint, windSpeed, windDirection, relativeHumidity | Format-Table -Wrap -AutoSize
+    $HourlyWeather[0..11]
 }
