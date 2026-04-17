@@ -29,11 +29,11 @@
     # Copyright statement for this module
     Copyright         = '(c) ITNinja01. All rights reserved.'
 
-    # Description of the functionality provided by this module
-    # Description = 'A module to get weather forecasts from the National Weather Service API'
+    #  Description of the functionality provided by this module
+    Description = 'A module to get weather forecasts from the National Weather Service API'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = '5.1'
+     PowerShellVersion = '5.1'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -103,7 +103,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags       = @('weather', 'forecast', 'national weather service', 'api', 'zip code', 'ip address')
+            Tags       = @('weather', 'forecast', 'nationalweatherservice', 'api', 'zipcode', 'ipaddress', 'posh-weather.gov')
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/ITNinja01/Posh-Weather.Gov/blob/main/LICENSE'
