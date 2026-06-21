@@ -30,10 +30,10 @@
     Copyright         = '(c) ITNinja01. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = 'A module to get weather forecasts from the National Weather Service API'
+    Description = 'A module to get weather forecasts from the National Weather Service API'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = '5.1'
+     PowerShellVersion = '5.1'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -115,7 +115,10 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            # ReleaseNotes = ''
+             ReleaseNotes = 'Module now supports retrieving current weather conditions in addition to forecasts.'
+
+             # A URL to an online version of the help file for this module.
+            # HelpInfoURI = ''
 
             # Prerelease string of this module
             # Prerelease = ''
