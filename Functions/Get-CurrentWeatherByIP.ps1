@@ -1,9 +1,9 @@
 function Get-CurrentWeatherByIP {
     <#
 .SYNOPSIS
-This script will show the weather forecast for now, next week of time and next 8 hours based off your public IP.
+This script will show the current weather information based off your public IP.
 .DESCRIPTION
-This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the forecast.
+This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the current weather information.
 .FUNCTIONALITY
 API Calls, JSON, Terminal Output
 .COMPONENT
@@ -13,10 +13,10 @@ Ipinfo.io JSON response
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
-Get-WeatherForecastShortIP
+Get-CurrentWeatherByIP
 .NOTES
 Developer: ITNinja01
-Date: 02-07-2026
+Date: 06-27-2026
 Version: 1.0.0
 #>
 
@@ -29,7 +29,6 @@ Version: 1.0.0
     $longitude = $location[1]
     $City = $response.city
     $Country = $response.country
-    Write-Host "$City, $Country Forecast"
 
     #Creating variables to access weather
 
@@ -50,17 +49,21 @@ Version: 1.0.0
     #Math equation for finding Fahrenheit from Celsius degrees
     $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
 
-$stationName = $obs.properties.stationname
-$timestamp  = $obs.properties.timestamp
-$windDirection = $obs.properties.windDirection.value
-$windSpeed = $obs.properties.windSpeed.value
-
-Write-Host "Current Temperature: $ConvertedDegree °F
-Wind Direction: $windDirection °
-Wind Speed: $windSpeed m/s
-Observation Time: $timestamp" 
+    $stationName = $obs.properties.stationname
+    $timestamp = $obs.properties.timestamp
+    $windDirection = $obs.properties.windDirection.value
+    $windSpeed = $obs.properties.windSpeed.value
 
     #Carriage return to make it easier to read in the terminal
-    #$crlf = [Environment]::NewLine
-    #$crlf
+    $crlf = [Environment]::NewLine
+
+    Write-Host "$crlf
+$City, $Country Current Weather
+Current Temperature: $ConvertedDegree °F
+Wind Speed: $windSpeed m/s
+WindDirection: $windDirection °
+Observation Time: $timestamp
+Weather Station: $stationName
+$crlf
+"
 }
