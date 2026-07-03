@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-CurrentWeatherByIP
 .NOTES
 Developer: ITNinja01
-Date: 06-28-2026
+Date: 07-02-2026
 Version: 1.0.0
 #>
 
@@ -54,7 +54,24 @@ Version: 1.0.0
     $stationName = $obs.properties.stationname
     $timestamp = $obs.properties.timestamp
     $windDirection = $obs.properties.windDirection.value
-    
+    $WindCompass = '                     0° / 360°
+                         N
+                         |
+                         |
+             315° NW     |     NE 45°
+                    \    |    /
+                     \   |   /
+                      \  |  /
+270° W -----------------+----------------- E 90°
+                      /  |  \
+                     /   |   \
+                    /    |    \
+             225° SW     |     SE 135°
+                         |
+                         |
+                         S
+                       180°'
+
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
 
@@ -66,5 +83,6 @@ WindDirection: $windDirection °
 Observation Time: $timestamp
 Weather Station: $stationName
 $crlf
+$WindCompass
 "
 }
