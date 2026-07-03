@@ -1,19 +1,19 @@
 function Get-CurrentWeatherByZip {
     <#
 .SYNOPSIS
-This script will show the current weather information based off your public IP.
+This script will show the current weather information based off your zip code.
 .DESCRIPTION
-This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the current weather information.
+This script uses the ZIP Code information to fetch the longitude and latitude from the Zippopotam.us API, which is then used to query the Weather.Gov API for the current weather information.
 .FUNCTIONALITY
 API Calls, JSON, Terminal Output
 .COMPONENT
-Ipinfo.io, Weather.Gov API, PowerShell
+Zippopotam.us, Weather.Gov API, PowerShell
 .INPUTS
-Ipinfo.io JSON response
+Zippopotam.us JSON response
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
-Get-CurrentWeatherByIP
+Get-CurrentWeatherByZip
 .NOTES
 Developer: ITNinja01
 Date: 07-03-2026
@@ -137,18 +137,18 @@ Version: 1.0.0
     $station = $stations.features[0].properties.stationIdentifier
 
     # Get latest observation
-    $Observationervation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
+    $Observationervation   = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
-    $CurrentTemperature = $Observationervation.properties.temperature.value
-    $windSpeed = $Observationervation.properties.windSpeed.value
+    $CurrentTemperature = $Observation.properties.temperature.value
+    $windSpeed = $Observation.properties.windSpeed.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
     $ConvertedWindSpeed = [math]::Round(($windSpeed * 0.621371), 2)
     
-    $stationName = $Observationervation.properties.stationname
-    $timestamp = $Observationervation.properties.timestamp
-    $windDirection = $Observationervation.properties.windDirection.value
+    $stationName = $Observation.properties.stationname
+    $timestamp = $Observation.properties.timestamp
+    $windDirection = $Observation.properties.windDirection.value
     $WindCompass = '                     0° / 360°
                          N
                          |

@@ -13,7 +13,7 @@ Ipinfo.io JSON response
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
-Get-CurrentWeatherByIP
+Get-CurrentindChillByIP
 .NOTES
 Developer: ITNinja01
 Date: 07-03-2026

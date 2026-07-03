@@ -1,9 +1,9 @@
 function Get-CurrentHeatIndexByIP {
     <#
 .SYNOPSIS
-This script will show the current weather information based off your public IP.
+This script will show the current heat index based off your public IP.
 .DESCRIPTION
-This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the current weather information.
+This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the heat index information.
 .FUNCTIONALITY
 API Calls, JSON, Terminal Output
 .COMPONENT
@@ -13,7 +13,7 @@ Ipinfo.io JSON response
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
-Get-CurrentWeatherByIP
+Get-CurrentHeatIndexByIP
 .NOTES
 Developer: ITNinja01
 Date: 07-03-2026
@@ -43,16 +43,13 @@ Version: 1.0.0
 
     # Get latest observation
     $Observation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
-
     $HeatIndex = $Observation.properties.heatIndex.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($HeatIndex * 9) / 5 + 32, 2)
 
-    
     $stationName = $Observation.properties.stationname
     $timestamp = $Observation.properties.timestamp
-
 
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
@@ -63,6 +60,5 @@ Current Temperature: $ConvertedDegree °F
 Observation Time: $timestamp
 Weather Station: $stationName
 $crlf
-
 "
 }

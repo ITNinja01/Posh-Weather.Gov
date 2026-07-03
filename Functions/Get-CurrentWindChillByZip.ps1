@@ -136,14 +136,14 @@ Version: 1.0.0
     $station = $stations.features[0].properties.stationIdentifier
 
     # Get latest observation
-    $Observationervation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
+    $Observation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
-        $WindChill = $Observationervation.properties.WindChill.value
+        $WindChill = $Observation.properties.WindChill.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($WindChill * 9) / 5 + 32, 2)
-    $stationName = $Observationervation.properties.stationname
-    $timestamp = $Observationervation.properties.timestamp
+    $stationName = $Observation.properties.stationname
+    $timestamp = $Observation.properties.timestamp
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
 

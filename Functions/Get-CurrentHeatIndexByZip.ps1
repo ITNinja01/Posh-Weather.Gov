@@ -1,9 +1,9 @@
 function Get-CurrentHeatIndexByZip {
     <#
 .SYNOPSIS
-This script will show the current weather information based off your public IP.
+This script will show the current heat index based off your ZIP Code.
 .DESCRIPTION
-This script uses the public IP information from Ipinfo.io to feed the longitude and latitude to the Weather.Gov API which than receives the current weather information.
+This script uses the ZIP Code information to fetch the longitude and latitude from the Zippopotam.us API, which is then used to query the Weather.Gov API for the current heat index information.
 .FUNCTIONALITY
 API Calls, JSON, Terminal Output
 .COMPONENT
@@ -13,7 +13,7 @@ Ipinfo.io JSON response
 .OUTPUTS
 Weather.Gov JSON response
 .EXAMPLE
-Get-CurrentWeatherByIP
+Get-CurrentHeatIndexByZip
 .NOTES
 Developer: ITNinja01
 Date: 07-03-2026
@@ -136,14 +136,14 @@ Version: 1.0.0
     $station = $stations.features[0].properties.stationIdentifier
 
     # Get latest observation
-    $Observationervation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
+    $Observation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
-        $HeatIndex = $Observationervation.properties.heatIndex.value
+        $HeatIndex = $Observation.properties.heatIndex.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($HeatIndex * 9) / 5 + 32, 2)
-    $stationName = $Observationervation.properties.stationname
-    $timestamp = $Observationervation.properties.timestamp
+    $stationName = $Observation.properties.stationname
+    $timestamp = $Observation.properties.timestamp
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
 
