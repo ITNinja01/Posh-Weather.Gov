@@ -1,4 +1,4 @@
-function Get-CurrentWeatherByZip {
+function Get-CurrentWindChillByZip {
     <#
 .SYNOPSIS
 This script will show the current weather information based off your public IP.
@@ -126,7 +126,6 @@ Version: 1.0.0
     $City = $response.places.'place name'
 
     #Creating variables to access weather
-
     $APIWeatherURL = "https://api.weather.gov/points/$latitude,$longitude"
     $CurrentWeather = Invoke-RestMethod $APIWeatherURL
 
@@ -139,45 +138,20 @@ Version: 1.0.0
     # Get latest observation
     $Observationervation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
-    $CurrentTemperature = $Observationervation.properties.temperature.value
-    $windSpeed = $Observationervation.properties.windSpeed.value
+        $WindChill = $Observationervation.properties.WindChill.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
-    $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
-    $ConvertedWindSpeed = [math]::Round(($windSpeed * 0.621371), 2)
-    
+    $ConvertedDegree = [math]::Round(($WindChill * 9) / 5 + 32, 2)
     $stationName = $Observationervation.properties.stationname
     $timestamp = $Observationervation.properties.timestamp
-    $windDirection = $Observationervation.properties.windDirection.value
-    $WindCompass = '                     0° / 360°
-                         N
-                         |
-                         |
-             315° NW     |     NE 45°
-                    \    |    /
-                     \   |   /
-                      \  |  /
-270° W -----------------+----------------- E 90°
-                      /  |  \
-                     /   |   \
-                    /    |    \
-             225° SW     |     SE 135°
-                         |
-                         |
-                         S
-                       180°'
-
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
 
     Write-Host "$crlf
 $City, $Country Current Weather
-Current Temperature: $ConvertedDegree °F
-Wind Speed: $ConvertedWindSpeed mph
-WindDirection: $windDirection °
+WindChill: $ConvertedDegree °F
 Observation Time: $timestamp
 Weather Station: $stationName
 $crlf
-$WindCompass
 "
 }

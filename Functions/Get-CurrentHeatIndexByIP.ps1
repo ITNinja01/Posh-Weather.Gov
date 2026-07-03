@@ -1,4 +1,4 @@
-function Get-CurrentWeatherByIP {
+function Get-CurrentHeatIndexByIP {
     <#
 .SYNOPSIS
 This script will show the current weather information based off your public IP.
@@ -44,33 +44,15 @@ Version: 1.0.0
     # Get latest observation
     $Observation = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
-    $CurrentTemperature = $Observation.properties.temperature.value
-    $windSpeed = $Observation.properties.windSpeed.value
+    $HeatIndex = $Observation.properties.heatIndex.value
 
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
-    $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
-    $ConvertedWindSpeed = [math]::Round(($windSpeed * 0.621371), 2)
+    $ConvertedDegree = [math]::Round(($HeatIndex * 9) / 5 + 32, 2)
+
     
     $stationName = $Observation.properties.stationname
     $timestamp = $Observation.properties.timestamp
-    $windDirection = $Observation.properties.windDirection.value
-    $WindCompass = '                     0° / 360°
-                         N
-                         |
-                         |
-             315° NW     |     NE 45°
-                    \    |    /
-                     \   |   /
-                      \  |  /
-270° W -----------------+----------------- E 90°
-                      /  |  \
-                     /   |   \
-                    /    |    \
-             225° SW     |     SE 135°
-                         |
-                         |
-                         S
-                       180°'
+
 
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
@@ -78,11 +60,9 @@ Version: 1.0.0
     Write-Host "$crlf
 $City, $Country Current Weather
 Current Temperature: $ConvertedDegree °F
-Wind Speed: $ConvertedWindSpeed mph
-WindDirection: $windDirection °
 Observation Time: $timestamp
 Weather Station: $stationName
 $crlf
-$WindCompass
+
 "
 }
