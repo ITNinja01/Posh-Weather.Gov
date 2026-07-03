@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-CurrentWeatherByIP
 .NOTES
 Developer: ITNinja01
-Date: 06-27-2026
+Date: 06-28-2026
 Version: 1.0.0
 #>
 
@@ -45,22 +45,23 @@ Version: 1.0.0
     $obs = Invoke-RestMethod -Uri "https://api.weather.gov/stations/$station/observations/latest"
 
     $CurrentTemperature = $obs.properties.temperature.value
+    $windSpeed = $obs.properties.windSpeed.value
 
-    #Math equation for finding Fahrenheit from Celsius degrees
+    #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
-
+    $ConvertedWindSpeed = [math]::Round(($windSpeed * 0.621371), 2)
+    
     $stationName = $obs.properties.stationname
     $timestamp = $obs.properties.timestamp
     $windDirection = $obs.properties.windDirection.value
-    $windSpeed = $obs.properties.windSpeed.value
-
+    
     #Carriage return to make it easier to read in the terminal
     $crlf = [Environment]::NewLine
 
     Write-Host "$crlf
 $City, $Country Current Weather
 Current Temperature: $ConvertedDegree °F
-Wind Speed: $windSpeed m/s
+Wind Speed: $ConvertedWindSpeed mph
 WindDirection: $windDirection °
 Observation Time: $timestamp
 Weather Station: $stationName
