@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-CurrentWeatherByIP
 .NOTES
 Developer: ITNinja01
-Date: 07-03-2026
+Date: 07-05-2026
 Version: 1.0.0
 #>
 
@@ -46,7 +46,7 @@ Version: 1.0.0
 
     $CurrentTemperature = $Observation.properties.temperature.value
     $windSpeed = $Observation.properties.windSpeed.value
-
+$Description = $Observation.properties.textDescription
     #Math equation for finding Fahrenheit from Celsius degrees and converting wind speed from km/h to mph
     $ConvertedDegree = [math]::Round(($CurrentTemperature * 9) / 5 + 32, 2)
     $ConvertedWindSpeed = [math]::Round(($windSpeed * 0.621371), 2)
@@ -77,6 +77,7 @@ Version: 1.0.0
 
     Write-Host "$crlf
 $City, $Country Current Weather
+Description: $Description
 Current Temperature: $ConvertedDegree °F
 Wind Speed: $ConvertedWindSpeed mph
 WindDirection: $windDirection °

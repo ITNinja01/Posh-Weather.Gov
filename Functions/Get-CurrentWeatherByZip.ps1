@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-CurrentWeatherByZip
 .NOTES
 Developer: ITNinja01
-Date: 07-03-2026
+Date: 07-05-2026
 Version: 1.0.0
 #>
     $ZipCode = Read-Host -Prompt "Please enter your ZIP Code, if you are in the United States?"
@@ -149,6 +149,7 @@ Version: 1.0.0
     $stationName = $Observation.properties.stationname
     $timestamp = $Observation.properties.timestamp
     $windDirection = $Observation.properties.windDirection.value
+    $Description = $Observation.properties.textDescription   
     $WindCompass = '                     0° / 360°
                          N
                          |
@@ -172,6 +173,7 @@ Version: 1.0.0
 
     Write-Host "$crlf
 $City, $Country Current Weather
+Description: $Description
 Current Temperature: $ConvertedDegree °F
 Wind Speed: $ConvertedWindSpeed mph
 WindDirection: $windDirection °

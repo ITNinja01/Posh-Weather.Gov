@@ -12,7 +12,7 @@
     RootModule        = 'Posh-Weather.Gov.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -72,7 +72,13 @@
     FunctionsToExport = @('Get-WeatherForecastFullByIP', 
         'Get-WeatherForecastFullByZip', 
         'Get-WeatherForecastShortByIP', 
-        'Get-WeatherForecastShortByZip')
+        'Get-WeatherForecastShortByZip',
+        'Get-CurrentWeatherByIP',
+        'Get-CurrentWeatherByZip',
+        'Get-CurrentWindChillByIP',
+        'Get-CurrentWindChillByZip',
+        'Get-CurrentHeatIndexByIP',
+        'Get-CurrentHeatIndexByZip')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
@@ -95,7 +101,13 @@
         'Functions\Get-WeatherForecastFullByIP.ps1', 
         'Functions\Get-WeatherForecastFullByZip.ps1', 
         'Functions\Get-WeatherForecastShortByIP.ps1', 
-        'Functions\Get-WeatherForecastShortByZip.ps1')
+        'Functions\Get-WeatherForecastShortByZip.ps1',
+        'Functions\Get-CurrentWeatherByIP.ps1',
+        'Functions\Get-CurrentWeatherByZip.ps1',
+        'Functions\Get-CurrentWindChillByIP.ps1',
+        'Functions\Get-CurrentWindChillByZip.ps1',
+        'Functions\Get-CurrentHeatIndexByIP.ps1',
+        'Functions\Get-CurrentHeatIndexByZip.ps1')
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
     PrivateData       = @{
@@ -140,4 +152,3 @@
     # DefaultCommandPrefix = ''
 
 }
-
