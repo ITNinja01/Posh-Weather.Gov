@@ -16,7 +16,7 @@ Weather.Gov JSON response
 Get-CurrentWeatherByZip
 .NOTES
 Developer: ITNinja01
-Date: 07-05-2026
+Date: 07-12-2026
 Version: 1.0.0
 #>
     $ZipCode = Read-Host -Prompt "Please enter your ZIP Code, if you are in the United States?"
@@ -158,7 +158,7 @@ Version: 1.0.0
                     \    |    /
                      \   |   /
                       \  |  /
-270° W -----------------+----------------- E 90°
+ 270° W -----------------+----------------- E 90°
                       /  |  \
                      /   |   \
                     /    |    \
