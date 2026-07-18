@@ -115,7 +115,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags       = @('weather', 'forecast', 'weather.gov','nationalweatherservice','api', 'zip code', 'ip address')
+            Tags       = @('weather', 'forecast', 'weather.gov','nationalweatherservice','api', 'zipcode', 'ipaddress')
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/ITNinja01/Posh-Weather.Gov/blob/main/LICENSE'
